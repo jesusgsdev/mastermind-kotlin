@@ -36,25 +36,13 @@ private fun getGuessedInWrongPositions(secret: String, guess: String): Int {
         for (i in 0 until guess.length) {
             val letter = guess[i]
             if (!evaluatedChars.contains(letter)) {
-                val howManyInSecret = countHowMany(newSecret, letter)
-                val howManyInGuess = countHowMany(newGuess, letter)
-                letters += if (howManyInSecret == howManyInGuess || howManyInSecret > howManyInGuess) howManyInGuess
-                                else howManyInSecret
-
+                val howManyInSecret = newSecret.count{ c -> c == letter } 
+                val howManyInGuess = newGuess.count{ c -> c == letter }
+                letters += if (howManyInSecret >= howManyInGuess) howManyInGuess else howManyInSecret
                 evaluatedChars.add(letter)
             }
         }
     }
 
     return letters
-}
-
-private fun countHowMany(letters: String, letter: Char): Int {
-    var howMany = 0
-    for (i in 0 until letters.length) {
-        if (letters[i] == letter) {
-            howMany++
-        }
-    }
-    return howMany
 }
